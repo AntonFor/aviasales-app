@@ -7,8 +7,7 @@ import Ticket from '../ticket';
 
 import classes from './app.module.scss';
 
-const App = () => {
-	return (
+const App = () => (
 		<div className={classes.app}>
 			<Logo />
 			<div className={classes.container}>
@@ -22,6 +21,5 @@ const App = () => {
 			</div>
 		</div>
 	)
-}
 
 export default App;

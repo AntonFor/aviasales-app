@@ -1,0 +1,22 @@
+.tabs__button {
+	width: 250px;
+	height: 50px;
+	margin-bottom: 20px;
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #DFE5EC;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 20px;
+	letter-spacing: 1px;
+	color: #4A4A4A;
+}
+
+.tabs__button:last-child {
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+}

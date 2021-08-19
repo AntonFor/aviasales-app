@@ -12,11 +12,14 @@
 	line-height: 20px;
 	letter-spacing: 1px;
 	color: #4A4A4A;
-}
-
-.tabs__button:last-child {
-	border-bottom-left-radius: 0px;
-	border-top-left-radius: 0px;
-	border-bottom-right-radius: 5px;
-	border-top-right-radius: 5px;
+	&.selected {
+		background-color: #2196F3;
+		color: #FFFFFF;
+	}
+	&:last-child {
+		border-bottom-left-radius: 0px;
+		border-top-left-radius: 0px;
+		border-bottom-right-radius: 5px;
+		border-top-right-radius: 5px;
+	}
 }

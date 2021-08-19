@@ -8,18 +8,18 @@ import Ticket from '../ticket';
 import classes from './app.module.scss';
 
 const App = () => (
-		<div className={classes.app}>
-			<Logo />
-			<div className={classes.container}>
-				<Filter />
+	<div className={classes.app}>
+		<Logo />
+		<div className={classes.container}>
+			<Filter />
+			<div>
+				<Tabs />
 				<div>
-					<Tabs />
-					<div>
-						<Ticket />
-					</div>
+					<Ticket />
 				</div>
 			</div>
 		</div>
-	)
+	</div>
+)
 
 export default App;

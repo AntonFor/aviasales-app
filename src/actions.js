@@ -1,3 +1,4 @@
-export const selectCheap = () => ( {type: 'SELECT_CHEAP'} );
+export const select = (id) => ( {type: 'SELECT', id} );
 
-export const selectFast = () => ( {type: 'SELECT_FAST'} );
+export const checked = (id) => ( {type: 'CHECKED', id} );
+

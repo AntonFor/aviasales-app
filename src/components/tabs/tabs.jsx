@@ -3,45 +3,63 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import classNames from 'classnames';
+// import classNames from 'classnames';
+import classNamesBind from 'classnames/bind';
 import classes from './tabs.module.scss';
 
 import * as actions from '../../actions';
 
-const Tabs = ({ onClickCheap, onClickFast }) =>
-	(
+const classNameBind = classNamesBind.bind(classes);
+
+const Tabs = ({ sortButtonDate, onClick }) => {
+	const classNameCheap = classNameBind('tabs__button', {
+		'selected': sortButtonDate[0].selected
+	});
+	const classNameFast = classNameBind('tabs__button', {
+		'selected': sortButtonDate[1].selected
+	});
+	return (
 		<div>
 			<button
-				onClick={onClickCheap}
-				className={classNames(classes.tabs__button, classes.selected)}
+				id={sortButtonDate[0].id}
+				onClick={() => onClick(sortButtonDate[0].id)}
+				className={classNameCheap}
 				type="button">САМЫЙ ДЕШЕВЫЙ</button>
 			<button
-				onClick={onClickFast}
-				className={classes.tabs__button}
+				id={sortButtonDate[1].id}
+				onClick={() => onClick(sortButtonDate[1].id)}
+				className={classNameFast}
 				type="button">САМЫЙ БЫСТЫЙ</button>
 		</div>
 	)
-
+}
 
 Tabs.defaultProps = {
-  onClickCheap: () => {},
-  onClickFast: () => {},
+	sortButtonDate: [
+		{id: 'cheapButton', selected: false},
+		{id: 'fastButton', selected: true},
+		{id: 'allCheck', checked: false},
+		{id: 'withoutTransfersCheck', checked: true},
+		{id: 'oneTransplantСheck', checked: true},
+		{id: 'twoTransplantsСheck', checked: true},
+		{id: 'threeTransfersСheck', checked: false}
+	],
+  onClick: () => {},
 };
 
 Tabs.propTypes = {
-  onClickCheap: PropTypes.func,
-  onClickFast: PropTypes.func,
+	sortButtonDate: PropTypes.arrayOf(PropTypes.object),
+  onClick: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
-		sortButtonDate: state
-	})
+	sortButtonDate: state
+})
 
 const mapDispatchToProps = (dispatch) => {
-	const { selectCheap, selectFast } = bindActionCreators(actions, dispatch);
+	const { select } = bindActionCreators(actions, dispatch);
 	return ({
-		onClickCheap: selectCheap,
-		onClickFast: selectFast
+		onClick: select
 	})
 }
 

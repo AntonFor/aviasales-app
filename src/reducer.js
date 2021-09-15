@@ -1,19 +1,24 @@
-import { selectedButton, selectedCheckbox } from './utilities/utilities';
+import { selectedButton, selectedCheckbox, updateSearchId, errorSearchId } from './utilities/utilities';
 
-const dateState = [
-	{id: 'cheapButton', selected: true},
-	{id: 'fastButton', selected: false},
-	{id: 'allCheck', checked: false},
-	{id: 'withoutTransfersCheck', checked: true},
-	{id: 'oneTransplantСheck', checked: true},
-	{id: 'twoTransplantsСheck', checked: true},
-	{id: 'threeTransfersСheck', checked: false}
-];
+const dateState = {
+	cheapButton: true,
+	fastButton: false,
+	allCheck: false,
+	withoutTransfersCheck: true,
+	oneTransplantСheck: true,
+	twoTransplantsСheck: true,
+	threeTransfersСheck: false,
+	loading: true,
+	error: false,
+	searchId: null
+}
 
 const reducer = (state = dateState, action) => {
 	switch (action.type) {
-		case 'SELECT': return selectedButton(state, action.id)
-		case 'CHECKED': return selectedCheckbox(state, action.id)
+		case 'SELECT': return selectedButton(state, action.event)
+		case 'CHECKED': return selectedCheckbox(state, action.event)
+		case 'UPDATE_SEARCH_ID': return updateSearchId(state, action.body)
+		case 'ERROR_SEARCH_ID': return errorSearchId(state, action.error)
 		default: return state;
 	}
 }

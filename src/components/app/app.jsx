@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { PropTypes } from 'prop-types';
+import { bool, PropTypes } from 'prop-types';
 
 import Logo from '../logo';
 import Filter from '../filter';
@@ -13,12 +13,18 @@ import * as actions from '../../actions';
 
 import classes from './app.module.scss';
 
-const App = ({ searchId, updateSearchId }) => {
+const App = ({ updateSearchId, id, updateTickets, stopCheck }) => {
 	useEffect(() => {
 		updateSearchId();
 	}, []);
 
-	console.log(searchId);
+	useEffect(() => {
+		updateTickets(id);
+	}, [id]);
+
+	useEffect(() => {
+		if (!stopCheck) updateTickets(id);
+	}, [stopCheck]);
 	
 	return (
 		<div className={classes.app}>
@@ -37,23 +43,32 @@ const App = ({ searchId, updateSearchId }) => {
 }
 
 App.defaultProps = {
-	searchId: {},
-	updateSearchId: () => {}
+	updateSearchId: () => {},
+	id: '',
+	updateTickets: () => {},
+	stopCheck: false
 }
 
 App.propTypes = {
-	searchId: PropTypes.objectOf(PropTypes.object),
 	updateSearchId: PropTypes.func,
+	id: PropTypes.string,
+	updateTickets: PropTypes.func,
+	stopCheck: bool
 }
 
-const mapStateToProps = (state) => ({
-		searchId: state.searchId
-})
+const mapStateToProps = (state) => {
+	const { searchId, stop } = state;
+	return ({
+		id: searchId,
+		stopCheck: stop
+	})
+}
 
 const mapDispatchToProps = (dispatch) => {
-	const { searchId } = bindActionCreators(actions, dispatch);
+	const { searchId, tickets } = bindActionCreators(actions, dispatch);
 	return ({
-		updateSearchId: searchId
+		updateSearchId: searchId,
+		updateTickets: tickets
 	})
 }
 

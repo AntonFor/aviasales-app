@@ -72,11 +72,22 @@ export const selectedCheckbox = (state, event) => {
 }
 
 export const updateSearchId = (state, bodySearchId) => {
-	const newState = {...state, loading: false, error: false, searchId: bodySearchId};
+	const newState = {...state, loading: false, error: false, searchId: bodySearchId.searchId};
 	return newState;
 }
 
 export const errorSearchId = (state, bodyError) => {
+	const newState = {...state, loading: false, error: true};
+	console.log(bodyError);
+	return newState;
+}
+
+export const updateTickets = (state, bodyTickets) => {
+	const newState = {...state, loading: false, error: false, tickets: bodyTickets.tickets, stop: bodyTickets.stop};
+	return newState;
+}
+
+export const errorTickets = (state, bodyError) => {
 	const newState = {...state, loading: false, error: true};
 	console.log(bodyError);
 	return newState;

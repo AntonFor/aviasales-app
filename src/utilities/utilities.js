@@ -83,6 +83,7 @@ export const errorSearchId = (state, bodyError) => {
 }
 
 export const updateTickets = (state, bodyTickets) => {
+	// const temp = (bodyTickets.tickets === undefined) ? null : bodyTickets.tickets
 	const newState = {...state, loading: false, error: false, tickets: bodyTickets.tickets, stop: bodyTickets.stop};
 	return newState;
 }
@@ -92,3 +93,11 @@ export const errorTickets = (state, bodyError) => {
 	console.log(bodyError);
 	return newState;
 }
+
+// export const updateTicketsRepet = (searchId, stop) => {
+//	let acc = 0;
+//	while ((stop === false) && (acc < 30)) {
+//		acc+=1;
+//		if (searchId !== null) updateTickets(searchId);
+//	}
+// }

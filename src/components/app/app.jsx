@@ -1,30 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { bool, PropTypes } from 'prop-types';
+import { PropTypes } from 'prop-types';
 
 import Logo from '../logo';
 import Filter from '../filter';
 import Tabs from '../tabs';
-import Ticket from '../ticket';
+import TicketList from '../ticket-list';
 
 import * as actions from '../../actions';
+
+// import { updateTicketsRepet } from '../../utilities/utilities';
 
 import classes from './app.module.scss';
 
 const App = ({ updateSearchId, id, updateTickets, stopCheck }) => {
+	const check = useRef(stopCheck);
+
+	const updateTicketsRepet = (searchId, stop) => {
+		let acc = 0;
+		while (acc < 30) {
+			acc+=1;
+			if (stop) break;
+			if (searchId !== null) updateTickets(searchId);
+		}
+	}
+	
 	useEffect(() => {
 		updateSearchId();
 	}, []);
-
+	
 	useEffect(() => {
+		check.current = stopCheck;
 		updateTickets(id);
-	}, [id]);
-
-	useEffect(() => {
-		if (!stopCheck) updateTickets(id);
-	}, [stopCheck]);
+		updateTicketsRepet(id, check.current);
+	}, [id, stopCheck]);
 	
 	return (
 		<div className={classes.app}>
@@ -34,7 +45,7 @@ const App = ({ updateSearchId, id, updateTickets, stopCheck }) => {
 				<div>
 					<Tabs />
 					<div>
-						<Ticket />
+						<TicketList />
 					</div>
 				</div>
 			</div>
@@ -53,7 +64,7 @@ App.propTypes = {
 	updateSearchId: PropTypes.func,
 	id: PropTypes.string,
 	updateTickets: PropTypes.func,
-	stopCheck: bool
+	stopCheck: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {

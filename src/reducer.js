@@ -11,7 +11,7 @@ const dateState = {
 	loading: true,
 	error: false,
 	searchId: null,
-	tickets: null,
+	tickets: [],
 	stop: false
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
@@ -11,31 +11,16 @@ import TicketList from '../ticket-list';
 
 import * as actions from '../../actions';
 
-// import { updateTicketsRepet } from '../../utilities/utilities';
-
 import classes from './app.module.scss';
 
-const App = ({ updateSearchId, id, updateTickets, stopCheck }) => {
-	const check = useRef(stopCheck);
-
-	const updateTicketsRepet = (searchId, stop) => {
-		let acc = 0;
-		while (acc < 30) {
-			acc+=1;
-			if (stop) break;
-			if (searchId !== null) updateTickets(searchId);
-		}
-	}
-	
+const App = ({ updateSearchId, id, updateTickets }) => {
 	useEffect(() => {
 		updateSearchId();
 	}, []);
 	
 	useEffect(() => {
-		check.current = stopCheck;
 		updateTickets(id);
-		updateTicketsRepet(id, check.current);
-	}, [id, stopCheck]);
+	}, [id]);
 	
 	return (
 		<div className={classes.app}>
@@ -56,22 +41,19 @@ const App = ({ updateSearchId, id, updateTickets, stopCheck }) => {
 App.defaultProps = {
 	updateSearchId: () => {},
 	id: '',
-	updateTickets: () => {},
-	stopCheck: false
+	updateTickets: () => {}
 }
 
 App.propTypes = {
 	updateSearchId: PropTypes.func,
 	id: PropTypes.string,
-	updateTickets: PropTypes.func,
-	stopCheck: PropTypes.bool
+	updateTickets: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
-	const { searchId, stop } = state;
+	const { searchId } = state;
 	return ({
-		id: searchId,
-		stopCheck: stop
+		id: searchId
 	})
 }
 

@@ -4,7 +4,6 @@ class Server {
 		const response = await fetch(url, obj);
 		if (!response.ok) throw new Error(response.status);
 		return await response.json();
-		// return response;
 	}
 
 	getSearchId() {

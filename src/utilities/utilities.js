@@ -83,7 +83,6 @@ export const errorSearchId = (state, bodyError) => {
 }
 
 export const updateTickets = (state, bodyTickets) => {
-	// const temp = (bodyTickets.tickets === undefined) ? null : bodyTickets.tickets
 	const newState = {...state, loading: false, error: false, tickets: bodyTickets.tickets, stop: bodyTickets.stop};
 	return newState;
 }
@@ -94,10 +93,25 @@ export const errorTickets = (state, bodyError) => {
 	return newState;
 }
 
-// export const updateTicketsRepet = (searchId, stop) => {
-//	let acc = 0;
-//	while ((stop === false) && (acc < 30)) {
-//		acc+=1;
-//		if (searchId !== null) updateTickets(searchId);
-//	}
-// }
+export const stopsTitle = (length) => {
+	switch (length) {
+		case 0: return 'БЕЗ ПЕРЕСАДОК'
+		case 1: return '1 ПЕРЕСАДКА'
+		case 2: return '2 ПЕРЕСАДКИ'
+		case 3: return '3 ПЕРЕСАДКИ'
+		case 4: return '4 ПЕРЕСАДКИ'
+		default: return 'ОШИБКА!'
+	}
+}
+
+export const getHoursTicket = (date) => {
+	let hours = (new Date(date)).getHours();
+	hours = hours < 10 ? `0${hours}` : hours;
+	return hours;
+}
+
+export const getMinutesTicket = (date) => {
+	let minutes = (new Date(date)).getMinutes();
+	minutes = minutes < 10 ? `0${minutes}` : minutes;
+	return minutes;
+}

@@ -17,7 +17,7 @@ const TicketList = ({ tickets }) => {
 				const arr = tickets.map((item, i) => {
 					if (i < 5) {
 						return (
-							<li key={item.segments[0].duration}><Ticket /></li>
+							<li key={item.segments[0].duration}><Ticket ticket={tickets[i]} /></li>
 						);
 					} return null;
 				})

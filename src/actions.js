@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import server from "./services/server";
 
 export const select = (event) => ( {type: 'SELECT', event} );
@@ -17,5 +18,11 @@ export const responseTickets = (body) => ( {type: 'UPDATE_TICKETS', body} );
 export const errorTickets = (error) => ( {type: 'ERROR_TICKETS', error} );
 
 export const tickets = (id) => (dispatch) => server.getTickets(id)
-	.then(response => dispatch(responseTickets(response)))
-	.catch(err => dispatch(errorTickets(err)))
+	.then(response => {
+		dispatch(responseTickets(response));
+		if (!response.stop) dispatch(tickets(id)); 
+	})	
+	.catch((err) => {
+		dispatch(errorTickets(err));
+		if (err == 'Error: 500') dispatch(tickets(id));
+	})

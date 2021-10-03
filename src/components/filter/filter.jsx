@@ -7,14 +7,14 @@ import classes from './filter.module.scss';
 
 import * as actions from '../../actions';
 
-const Filter = ({ filterCheckDate, onChange }) => (
+const Filter = ({ allCheck, withoutTransfersCheck, oneTransplantСheck, twoTransplantsСheck, threeTransfersСheck, onChange }) => (
 	<div className={classes.filter}>
 		<p className={classes.filter__title}>КОЛИЧЕСТВО ПЕРЕСАДОК</p>
 		<label className={classes.filter__checkbox}>
 			<input className={classes["filter__input-checkbox"]}
 				id='allCheck'
 				type="checkbox"
-				checked={filterCheckDate.allCheck}
+				checked={allCheck}
 				onChange={(event) => onChange(event)}
 			/>
 			Все
@@ -23,7 +23,7 @@ const Filter = ({ filterCheckDate, onChange }) => (
 			<input className={classes["filter__input-checkbox"]}
 				id='withoutTransfersCheck'
 				type="checkbox"
-				checked={filterCheckDate.withoutTransfersCheck}
+				checked={withoutTransfersCheck}
 				onChange={(event) => onChange(event)}
 			/>
 			Без пересадок
@@ -32,7 +32,7 @@ const Filter = ({ filterCheckDate, onChange }) => (
 			<input className={classes["filter__input-checkbox"]}
 				id='oneTransplantСheck'
 				type="checkbox"
-				checked={filterCheckDate.oneTransplantСheck}
+				checked={oneTransplantСheck}
 				onChange={(event) => onChange(event)}
 			/>
 			1 пересадка
@@ -41,7 +41,7 @@ const Filter = ({ filterCheckDate, onChange }) => (
 			<input className={classes["filter__input-checkbox"]}
 				id='twoTransplantsСheck'
 				type="checkbox"
-				checked={filterCheckDate.twoTransplantsСheck}
+				checked={twoTransplantsСheck}
 				onChange={(event) => onChange(event)}
 			/>
 			2 пересадки
@@ -50,7 +50,7 @@ const Filter = ({ filterCheckDate, onChange }) => (
 			<input className={classes["filter__input-checkbox"]}
 				id='threeTransfersСheck'
 				type="checkbox"
-				checked={filterCheckDate.threeTransfersСheck}
+				checked={threeTransfersСheck}
 				onChange={(event) => onChange(event)}
 			/>
 			3 пересадки
@@ -59,26 +59,33 @@ const Filter = ({ filterCheckDate, onChange }) => (
 )
 
 Filter.defaultProps = {
-	filterCheckDate: {
-		cheapButton: true,
-		fastButton: false,
-		allCheck: false,
-		withoutTransfersCheck: true,
-		oneTransplantСheck: true,
-		twoTransplantsСheck: true,
-		threeTransfersСheck: false
-	},
+	allCheck: false,
+	withoutTransfersCheck: false,
+	oneTransplantСheck: false,
+	twoTransplantsСheck: false,
+	threeTransfersСheck: false,
 	onChange: () => {},
 };
 	
 Filter.propTypes = {
-	filterCheckDate: PropTypes.objectOf(PropTypes.bool),
+	allCheck: PropTypes.bool,
+	withoutTransfersCheck: PropTypes.bool,
+	oneTransplantСheck: PropTypes.bool,
+	twoTransplantsСheck: PropTypes.bool,
+	threeTransfersСheck: PropTypes.bool,
 	onChange: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-	filterCheckDate: state
-})
+const mapStateToProps = (state) => {
+	const { allCheck, withoutTransfersCheck, oneTransplantСheck, twoTransplantsСheck, threeTransfersСheck } = state;
+	return ({
+		allCheck,
+		withoutTransfersCheck,
+		oneTransplantСheck,
+		twoTransplantsСheck,
+		threeTransfersСheck
+	})
+}
 
 const mapDispatchToProps = (dispatch) => {
 	const { checked } = bindActionCreators(actions, dispatch);

@@ -132,3 +132,11 @@ export const getMinutesTicket = (date) => {
 	minutes = minutes < 10 ? `0${minutes}` : minutes;
 	return minutes;
 }
+
+export const getTimeFromMins = (min) => {
+	let hours = Math.trunc(min/60);
+	let minutes = min % 60;
+	hours = hours < 10 ? `0${hours}` : hours;
+	minutes = minutes < 10 ? `0${minutes}` : minutes;
+	return `${hours}ч ${minutes}м`;
+};

@@ -10,8 +10,7 @@ import * as actions from '../../actions';
 
 const classNameBind = classNamesBind.bind(classes);
 
-const Tabs = ({ sortButtonDate, onClick }) => {
-	const { cheapButton, fastButton } = sortButtonDate;
+const Tabs = ({ cheapButton, fastButton, onClick }) => {
 	const classNameCheap = classNameBind('tabs__button', {
 		'selected': cheapButton
 	});
@@ -35,26 +34,24 @@ const Tabs = ({ sortButtonDate, onClick }) => {
 }
 
 Tabs.defaultProps = {
-	sortButtonDate: {
-		cheapButton: true,
-		fastButton: false,
-		allCheck: false,
-		withoutTransfersCheck: true,
-		oneTransplantСheck: true,
-		twoTransplantsСheck: true,
-		threeTransfersСheck: false
-	},
+	cheapButton: true,
+	fastButton: false,
 	onClick: () => {},
 };
 
 Tabs.propTypes = {
-	sortButtonDate: PropTypes.objectOf(PropTypes.bool),
-  onClick: PropTypes.func,
+	cheapButton: PropTypes.bool,
+	fastButton: PropTypes.bool,
+	onClick: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-	sortButtonDate: state
-})
+const mapStateToProps = (state) => {
+	const { cheapButton, fastButton } = state;
+	return ({
+		cheapButton,
+		fastButton
+	})
+}
 
 const mapDispatchToProps = (dispatch) => {
 	const { select } = bindActionCreators(actions, dispatch);

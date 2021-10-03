@@ -3,6 +3,8 @@ import server from "./services/server";
 
 export const select = (event) => ( {type: 'SELECT', event} );
 
+export const selectDefoult = () => ( {type: 'SELECT_DEFOULT'} );
+
 export const checked = (event) => ( {type: 'CHECKED', event} );
 
 export const responseSearchId = (body) => ( {type: 'UPDATE_SEARCH_ID', body} );

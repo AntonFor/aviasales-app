@@ -1,4 +1,4 @@
-import { selectedButton, selectedCheckbox, updateSearchId, errorSearchId, updateTickets, errorTickets } from './utilities/utilities';
+import { selectedButton, selectedCheckbox, updateSearchId, errorSearchId, updateTickets, errorTickets, selectedButtonDefoult } from './utilities/utilities';
 
 const dateState = {
 	cheapButton: true,
@@ -18,6 +18,7 @@ const dateState = {
 const reducer = (state = dateState, action) => {
 	switch (action.type) {
 		case 'SELECT': return selectedButton(state, action.event)
+		case 'SELECT_DEFOULT': return selectedButtonDefoult(state)
 		case 'CHECKED': return selectedCheckbox(state, action.event)
 		case 'UPDATE_SEARCH_ID': return updateSearchId(state, action.body)
 		case 'ERROR_SEARCH_ID': return errorSearchId(state, action.error)

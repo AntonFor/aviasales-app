@@ -1,19 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
+
+import { Progress } from 'antd';
 
 import Logo from '../logo';
 import Filter from '../filter';
 import Tabs from '../tabs';
 import TicketList from '../ticket-list';
+import Message from '../message';
 
 import * as actions from '../../actions';
 
 import classes from './app.module.scss';
 
-const App = ({ updateSearchId, id, updateTickets }) => {
+const App = ({ updateSearchId, id, updateTickets, stop, tickets, withoutTransfersCheck, oneTransplantСheck, twoTransplantsСheck, threeTransfersСheck }) => {
+	const [percent, setPercent] = useState(0);
+	
 	useEffect(() => {
 		updateSearchId();
 	}, []);
@@ -21,6 +26,14 @@ const App = ({ updateSearchId, id, updateTickets }) => {
 	useEffect(() => {
 		updateTickets(id);
 	}, [id]);
+
+	useEffect(() => {
+		setPercent(() => (100*tickets.length/10000));
+	}, [tickets]);
+
+	const progress = stop ? null : <Progress percent={percent} showInfo={false} strokeColor='#2196F3' />
+	const message = (!withoutTransfersCheck && !oneTransplantСheck && !twoTransplantsСheck && !threeTransfersСheck) ? 
+		<Message /> : null
 	
 	return (
 		<div className={classes.app}>
@@ -30,6 +43,8 @@ const App = ({ updateSearchId, id, updateTickets }) => {
 				<div>
 					<Tabs />
 					<div>
+						{message}
+						{progress}
 						<TicketList />
 					</div>
 				</div>
@@ -41,19 +56,37 @@ const App = ({ updateSearchId, id, updateTickets }) => {
 App.defaultProps = {
 	updateSearchId: () => {},
 	id: '',
-	updateTickets: () => {}
+	updateTickets: () => {},
+	stop: false,
+	tickets: [],
+	withoutTransfersCheck: false,
+	oneTransplantСheck: false,
+	twoTransplantsСheck: false,
+	threeTransfersСheck: false
 }
 
 App.propTypes = {
 	updateSearchId: PropTypes.func,
 	id: PropTypes.string,
-	updateTickets: PropTypes.func
+	updateTickets: PropTypes.func,
+	stop: PropTypes.bool,
+	tickets: PropTypes.arrayOf(PropTypes.object),
+	withoutTransfersCheck: PropTypes.bool,
+	oneTransplantСheck: PropTypes.bool,
+	twoTransplantsСheck: PropTypes.bool,
+	threeTransfersСheck: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
-	const { searchId } = state;
+	const { searchId, stop, tickets, withoutTransfersCheck, oneTransplantСheck, twoTransplantsСheck, threeTransfersСheck } = state;
 	return ({
-		id: searchId
+		id: searchId,
+		stop,
+		tickets,
+		withoutTransfersCheck,
+		oneTransplantСheck,
+		twoTransplantsСheck,
+		threeTransfersСheck
 	})
 }
 

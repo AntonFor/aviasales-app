@@ -1,12 +1,24 @@
 export const selectedButton = (state, event) => {
 	const { target } = event;
+	const { tickets } = state;
+	const newTickets = [...tickets];
 	let newState;
 	if (target.id === 'cheapButton') {
-		newState = {...state, cheapButton: true, fastButton: false}
+		newTickets.sort((prev, next) => (prev.price - next.price));
+		newState = {...state, cheapButton: true, fastButton: false, tickets: newTickets};
 	} else if (target.id === 'fastButton') {
-		newState = {...state, cheapButton: false, fastButton: true}
+		newTickets.sort((prev, next) => (prev.segments[0].duration - next.segments[0].duration));
+		newState = {...state, cheapButton: false, fastButton: true, tickets: newTickets};
 	}
 	return newState
+}
+
+export const selectedButtonDefoult = (state) => {
+	const { tickets } = state;
+	const newTickets = [...tickets];
+	newTickets.sort((prev, next) => (prev.price - next.price));
+	const	newState = {...state, tickets: newTickets};
+	return newState;
 }
 
 export const selectedCheckbox = (state, event) => {
@@ -68,8 +80,10 @@ export const selectedCheckbox = (state, event) => {
 			}
 		}
 	}
-	return newState
+	return newState;
 }
+
+export const selectedCheckboxDefoult = () => {}
 
 export const updateSearchId = (state, bodySearchId) => {
 	const newState = {...state, loading: false, error: false, searchId: bodySearchId.searchId};
@@ -83,7 +97,10 @@ export const errorSearchId = (state, bodyError) => {
 }
 
 export const updateTickets = (state, bodyTickets) => {
-	const newState = {...state, loading: false, error: false, tickets: bodyTickets.tickets, stop: bodyTickets.stop};
+	const { tickets } = state;
+	let ticketsNew = [...tickets];
+	ticketsNew = [...ticketsNew, ...bodyTickets.tickets];
+	const newState = {...state, loading: false, error: false, tickets: ticketsNew, stop: bodyTickets.stop};
 	return newState;
 }
 

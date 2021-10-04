@@ -90,7 +90,7 @@ export const updateSearchId = (state, bodySearchId) => {
 	return newState;
 }
 
-export const errorSearchId = (state, bodyError) => {
+export const errorSearchId = (state) => {
 	const newState = {...state, loading: false, error: true};
 	return newState;
 }
@@ -103,7 +103,7 @@ export const updateTickets = (state, bodyTickets) => {
 	return newState;
 }
 
-export const errorTickets = (state, bodyError) => {
+export const errorTickets = (state) => {
 	const newState = {...state, loading: false, error: true};
 	return newState;
 }

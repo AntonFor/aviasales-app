@@ -92,7 +92,6 @@ export const updateSearchId = (state, bodySearchId) => {
 
 export const errorSearchId = (state, bodyError) => {
 	const newState = {...state, loading: false, error: true};
-	console.log(bodyError);
 	return newState;
 }
 
@@ -106,7 +105,6 @@ export const updateTickets = (state, bodyTickets) => {
 
 export const errorTickets = (state, bodyError) => {
 	const newState = {...state, loading: false, error: true};
-	console.log(bodyError);
 	return newState;
 }
 
